@@ -46,15 +46,14 @@ class PaisesRepository {
 
   // TO-DO:
   // Implementar el método getPaises
-  List<Pais> getPaises(){
+    List<Pais> getPaises() {
+    return (api.getPaises()).map((pais) {
+      return Pais.fromJSON(pais);
+    }).toList();
+  }
 
-    return [];
-  }    
-
-  // TO-DO:
-  // Implementar el método infoPais
   Pais infoPais() {
-    return Pais(nombre: 'Sin implementar');
+    return Pais.fromJSON(api.infoPais());
   }
 
 }
