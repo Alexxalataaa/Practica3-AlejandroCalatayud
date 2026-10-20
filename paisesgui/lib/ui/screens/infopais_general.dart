@@ -24,6 +24,40 @@ class InfoPaisGeneral extends StatelessWidget {
     // Debéis tener en cuenta no sobrepasar los límites y dibujar fuera del espacio disponible
     // Para comprobar que no os salís, podéis probar a girar el dispositivo (si lo estáis haciendo sobre Android)
 
-    return const Placeholder();
+        return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Image.network(
+                pais.imagen ?? "",
+                width: double.infinity,
+                height: 220,
+                fit: BoxFit.cover,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                pais.nombre,
+                style: Theme.of(context).textTheme.displayLarge,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                "Capital: ${pais.capital}",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  pais.descripcion ?? "",
+                  textAlign: TextAlign.justify,
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
