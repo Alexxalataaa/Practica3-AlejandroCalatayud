@@ -11,21 +11,25 @@ class PaisesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          // Proporciona a _creaLlistaPaises la lista de paises de Europa
-          child:
-              _creaListaPaises(_repository.getPaises())), 
-    );
+      return Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: _creaListaPaises(_repository.getPaises()),
+          ),
+        ),
+      );
   }
 
-  Widget _creaListaPaises(List<Pais> paises) {
-    // Recibimos la lista de paises
-    
-    // TO-DO
-    // Debemos utilizar un ListView.builder para recorrer la lista de países
-    // y generar un widget personalizado de tipo PaisCard, con la imagen y el nombre.
-    return const Placeholder();
+    Widget _creaListaPaises(List<Pais> paises) {
+    return ListView.builder(
+      itemCount: paises.length,
+      itemBuilder: (context, index) {
+        return PaisCard(
+          imagen: paises[index].imagen ?? "",
+          nombre: paises[index].nombre,
+        );
+      },
+    );
   }
 }
 
@@ -47,6 +51,26 @@ class PaisCard extends StatelessWidget {
     // Devuelve un widget de tipo Card, con el diseño que desees, pero
     // que muestre la imagen  (obtenida de Internet a partir de la url)
     // y el nombre del país.
-    return const Placeholder();
+        return Card(
+      margin: const EdgeInsets.all(10),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        children: [
+          Image.network(
+            imagen,
+            height: 180,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Text(
+              nombre,
+              style: Theme.of(context).textTheme.displayLarge,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
