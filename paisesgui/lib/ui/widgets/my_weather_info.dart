@@ -8,7 +8,12 @@ class MyWeatherInfo extends StatelessWidget {
 
     return Column(
       children: [
-        _obtenerIconoTiempo("0"),
+        // Limitamos el tamaño del icono para que no se salga de la pantalla
+        SizedBox(
+          width: 150,
+          height: 150,
+          child: _obtenerIconoTiempo("0"),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -23,16 +28,25 @@ class MyWeatherInfo extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        // Usamos un Wrap para que la información del viento pase a la
+        // línea siguiente en pantallas estrechas, en lugar de salirse
+        Wrap(
+          alignment: WrapAlignment.center,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 30,
+          runSpacing: 10,
           children: [
-            const Icon(Icons.wind_power, size: 35),
-            const SizedBox(width: 30),
-            Text(
-              "20 km/h",
-              style: Theme.of(context).textTheme.headlineSmall,
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.wind_power, size: 35),
+                const SizedBox(width: 10),
+                Text(
+                  "20 km/h",
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+              ],
             ),
-            const SizedBox(width: 30),
             obtenerWidgetDireccionViento("0.0", context),
           ],
         ),
@@ -71,7 +85,7 @@ class MyWeatherInfo extends StatelessWidget {
       icono = const Icon(Icons.north);
       nombreViento = "Tramontana";
     }
-    return Row(children: [
+    return Row(mainAxisSize: MainAxisSize.min, children: [
       Text(
         nombreViento,
         style: Theme.of(context).textTheme.headlineSmall,

@@ -1,56 +1,61 @@
-
 import 'package:flutter/material.dart';
 import 'package:paisesgui/data/repositories/paises_repository.dart';
 import 'package:paisesgui/domain/entities/pais.dart';
+import 'package:paisesgui/ui/widgets/imagen_red.dart';
+
+/* Pantalla InfoPaisGeneral: muestra la información general de un país:
+   imagen, nombre, capital y descripción. */
 
 class InfoPaisGeneral extends StatelessWidget {
   InfoPaisGeneral({super.key});
 
-    // Referencia al repositorio, de donde obtendremos la lista de continentes
+  // Referencia al repositorio, de donde obtendremos la información del país
   final PaisesRepository _repository = PaisesRepository();
-
 
   @override
   Widget build(BuildContext context) {
-
     // Recogemos el país del repositorio
     Pais pais = _repository.infoPais();
-    
-    // TO-DO
-    // Añadir la información siguiente sobre el país:
-    // Imagen, nombre, capital y descripción, de forma similar a como se muestra en el enunciado
-
-    // Podéis utilizar los widgets y contenedores que consideréis oportunos (Containers, SingleChildScrollView, Columns, etc)
-    // Debéis tener en cuenta no sobrepasar los límites y dibujar fuera del espacio disponible
-    // Para comprobar que no os salís, podéis probar a girar el dispositivo (si lo estáis haciendo sobre Android)
 
     return Scaffold(
+      appBar: AppBar(title: Text(pais.nombre)),
       body: SafeArea(
+        // Contenedor con scroll para no salirnos del espacio disponible
+        // (por ejemplo, al girar el dispositivo)
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.network(
-                pais.imagen ?? "",
-                width: double.infinity,
-                height: 220,
-                fit: BoxFit.cover,
-              ),
+              // Imagen del país, obtenida de Internet
+              ImagenRed(url: pais.imagen ?? "", alto: 220),
               const SizedBox(height: 16),
+              // Nombre del país
               Text(
                 pais.nombre,
+                textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.displayLarge,
               ),
               const SizedBox(height: 8),
-              Text(
-                "Capital: ${pais.capital}",
-                style: Theme.of(context).textTheme.titleLarge,
+              // Capital
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.location_city, size: 22),
+                  const SizedBox(width: 8),
+                  Text(
+                    pais.capital ?? "",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
+              // Descripción
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   pais.descripcion ?? "",
                   textAlign: TextAlign.justify,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               const SizedBox(height: 20),

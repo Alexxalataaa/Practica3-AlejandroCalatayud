@@ -14,10 +14,12 @@ class ContinentesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // Estructura de la pantalla Material Design
+      appBar: AppBar(title: const Text("Continentes")),
       body: Center(
         // Centramos el contenido
         child: SingleChildScrollView(
           // Contenedor con scroll por si nos salimos del espacio disponible
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child: Column(
             // Organizamos los continentes en forma de columna
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -63,11 +65,17 @@ class ContinenteRoundButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // CircleAvatar con la imagen del continente de fondo (obtenida de Internet)
+    // y el nombre del continente como hijo.
     return CircleAvatar(
       radius: 110,
+      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
       backgroundImage: NetworkImage(imagen),
+      // Si la imagen no se puede descargar, se mantiene el color de fondo
+      onBackgroundImageError: (error, stackTrace) {},
       child: Text(
         nombre,
+        textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.displayMedium,
       ),
     );
